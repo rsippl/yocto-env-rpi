@@ -1,5 +1,6 @@
-# Yocto Docker Environment Template
-## Components for Yocto development running in a Docker container
+## Docker based development environment for Yocto on Raspberry Pi
+
+Tested on the Raspberry Pi 3 Model B
 
 ### Scripts
 * `build-docker-image.sh`
@@ -53,12 +54,9 @@ docker run --rm hello-world
 
 * add the layers your project depends on to `clone-layers.sh` 
   * you'll eventually have to add them to `conf/bblayers.conf`, too
-* check `init-env`: make sure the right environment init script is sourced
-  * this depends on your layer setup, consult the docs
-  * examples:
-    * Poky: https://www.yoctoproject.org/docs/latest/brief-yoctoprojectqs/brief-yoctoprojectqs.html
-    * OpenSTLinux: https://wiki.st.com/stm32mpu/wiki/STM32MP1_Distribution_Package
-    * FSL Community BSP: https://github.com/Freescale/fsl-community-bsp-platform
+* check `init-env` and make sure the environment init script is sourced in a correct way
+  * see https://www.yoctoproject.org/docs/2.6.3/ref-manual/ref-manual.html#structure-core-script
+  * see https://github.com/agherzan/meta-raspberrypi
 
 
 Finally, proceed with the following (as a non-root user):
