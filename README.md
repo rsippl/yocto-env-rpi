@@ -17,6 +17,10 @@ Tested on the Raspberry Pi 3 Model B
 * `init-env`
     * initializes the environment variables, so you can issue commands like `bitbake` etc.
     * source it *every time* you start the container: `source ./init-env`
+* `serial.sh`
+    * connects to the board's serial port (via /dev/ttyUSB0)
+    * requires `ENABLE_UART = "1"`
+    * see https://learn.adafruit.com/adafruits-raspberry-pi-lesson-5-using-a-console-cable/connect-the-lead
 
 ### Directories
 * `cache`
@@ -65,7 +69,7 @@ Finally, proceed with the following (as a non-root user):
 ./start.sh
 ./clone-layers.sh
 . ./init-env
-# now you can run bitbake
+bitbake core-image-minimal
 ```
 
 Copy `conf` from `workspace/build` to the project's root dir, in order to add `local.conf`, `bblayers.conf` etc. to the git repo.
@@ -76,5 +80,16 @@ Copy `conf` from `workspace/build` to the project's root dir, in order to add `l
 ```
 ./start.sh
 . ./init-env
-bitbake ...
+bitbake core-image-minimal
 ```
+
+### Creating an SD Card Image
+
+Creating an image using bitbake generates a compressed wic file in
+workspace/build/tmp/deploy/images. For example, a
+`bitbake core-image-minimal` on Raspberry Pi 3 will generate
+`workspace/build/tmp/deploy/images/raspberrypi3/core-image-minimal-raspberrypi3.wic.gz`
+
+Use balenaEtcher (https://www.balena.io/etcher) to write it to an SD card.
+
+Connect to the board via USB, then use `serial.sh` to watch it boot.
